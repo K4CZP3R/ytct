@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Search for an youtuber:</h1>
+    <form method="get">
+        <div class="form-group">
+            <label for="channelName">Channel name</label>
+            {% if channel_name == None %}
+                <input type="text" class="form-control" id="channelName" name="channelName" placeholder="PewDiePie">
+            {% else %}
+                <input type="text" class="form-control" id="channelName" name="channelName" placeholder="{{ channel_name }}">
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <p>Channels added: {{ cl|length }}</p>
+
+    {% if channels|length != 0 %}
+        <div class="row">
+            {% for channel in channels %}
+                <div class="col-sm-6">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ channel.picture }}" alt="Channel picture of {{ channel.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ channel.name}}</h5>
+                            <p class="card-text">{{ channel.description }}</p>
+                            <a href="/yt_list/add/{{ channel.cid }}?redirectUrl=/search" class="btn btn-primary">Add to list</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

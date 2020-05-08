@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if channels|length != 0 %}
+        <a class="btn btn-success" href="/timeline/{{ ids }}">View current timeline</a>
+        <a class="btn btn-danger" href="/yt_list/reset?redirectUrl=/search">Reset whole list</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Avatar</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for channel in channels %}
+                <tr>
+                    <th scope="col">{{ channel.name }}</th>
+                    <th><img src="{{ channel.picture }}" style="width: 64px;"/></th>
+                    <th>{{ channel.description }}</th>
+                    <th><a href="/yt_list/remove/{{ channel.cid }}?redirectUrl=/yt_list" class="btn btn-danger">Remove</a></th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

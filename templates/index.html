@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="text-center">
+        <h3>
+            YTCT
+            <small class="text-muted">YouTube Channel Tracker</small>
+        </h3>
+        <br>
+
+
+        <p class="lead">
+            Too many subscribed channels and you watch only some of them daily?<br>
+            Add them to timeline on this website!
+        </p>
+
+
+        {% if logged_in %}
+            <h3>
+                You are logged in!
+                <small class="text-muted">You can start by adding channels to your list!</small>
+            </h3>
+        {% else %}
+            <h3>
+                You are not logged in!
+                <small class="text-muted">To use this site, you will need to login with your Google Account.</small>
+                <br>
+            <a class="btn btn-outline-primary" href="/google_login">Google login</a>
+            </h3>
+        {% endif %}
+    </div>
+{% endblock %}

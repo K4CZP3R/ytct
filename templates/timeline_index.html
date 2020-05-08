@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if videos|length != 0 %}
+        Share this timeline:<br>
+        <code>{{ timeline_url }}</code>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Channel</th>
+                <th scope="col">Date</th>
+                <th scope="col">Link</th>
+                <th scope="col">Thumbnail</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for v in videos %}
+                <tr>
+                    <th scope="row">{{ v.title }}</th>
+                    <th>{{ v.channel_name }}</th>
+                    <th>{{ v.date }}</th>
+                    <th><a href="{{ v.url }}">Click here</a></th>
+                    <th><img src="{{ v.thumbnail }}" style="width: 64px;"/></th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+{% endblock %}
