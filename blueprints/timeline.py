@@ -20,7 +20,7 @@ async def get_videos_of_channels_async(s_credentials, ids_to_fetch, pids_to_fetc
                 YouTubeApi.get_videos_by_channel_id,
                 *(s_credentials, i)
             )
-                for i in ids_to_fetch
+            for i in ids_to_fetch
         ]
         p_task = [
             loop.run_in_executor(
@@ -77,7 +77,7 @@ def index(ids):
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    future = asyncio.ensure_future(get_videos_of_channels_async(session['credentials'], ids))
+    future = asyncio.ensure_future(get_videos_of_channels_async(session['credentials'], ids, []))
     loop.run_until_complete(future)
 
     videos = sort_videos(future.result())

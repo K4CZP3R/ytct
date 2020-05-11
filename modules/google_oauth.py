@@ -6,8 +6,8 @@ class GoogleOAuth:
     @staticmethod
     def get_authorization_url() -> str:
         flow = GoogleOAuth.__get_flow()
-        #flow.redirect_uri = "https://ytct.k4czp3r.xyz/oauth2callback"
-        flow.redirect_uri = "https://localhost:5000/oauth2callback"
+        flow.redirect_uri = "https://ytct.k4czp3r.xyz/oauth2callback"
+        #flow.redirect_uri = "https://localhost:5000/oauth2callback"
 
         authorization_url, state = flow.authorization_url(
             access_type='offline',
