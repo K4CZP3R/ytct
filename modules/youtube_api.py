@@ -20,6 +20,10 @@ class YouTubeApi:
         channel_id[1] = "U"
         playlist_id = "".join(channel_id)
 
+        return YouTubeApi.get_videos_in_playlist(session_credentials, playlist_id)
+
+    @staticmethod
+    def get_videos_in_playlist(session_credentials, playlist_id):
         credentials = Credentials(**session_credentials)
         youtube = build('youtube', 'v3', credentials=credentials)
         query = youtube.playlistItems().list(
@@ -27,6 +31,7 @@ class YouTubeApi:
             maxResults=5,
             playlistId=playlist_id
         )
+
         return YouTubeApi.__convert_search_to_videos_list(query.execute())
 
     @staticmethod

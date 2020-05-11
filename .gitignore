@@ -131,3 +131,9 @@ dmypy.json
 client_secret.json
 
 flask_session/
+
+cert.pem
+
+chain.pem
+
+privkey.pem

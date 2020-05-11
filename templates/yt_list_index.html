@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+    {% if ids|length != 0 or pids|length != 0 %}
+     <a class="btn btn-success" href="/timeline?ids={{ ids }}&pids={{ pids }}">View current timeline</a>
+    {% endif %}
     {% if channels|length != 0 %}
-        <a class="btn btn-success" href="/timeline/{{ ids }}">View current timeline</a>
         <a class="btn btn-danger" href="/yt_list/reset?redirectUrl=/search">Reset whole list</a>
+        <h1>Channels</h1>
         <table class="table">
             <thead>
             <tr>
@@ -19,6 +22,25 @@
                     <th><img src="{{ channel.picture }}" style="width: 64px;"/></th>
                     <th>{{ channel.description }}</th>
                     <th><a href="/yt_list/remove/{{ channel.cid }}?redirectUrl=/yt_list" class="btn btn-danger">Remove</a></th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% if playlists|length != 0 %}
+        <h1>Playlists</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for playlist in playlists %}
+                <tr>
+                    <th scope="col">{{ playlist }}</th>
+                    <th><a href="/yt_list/remove_playlist/{{ playlist }}?redirectUrl=/yt_list" class="btn btn-danger">Remove</a></th>
                 </tr>
             {% endfor %}
             </tbody>

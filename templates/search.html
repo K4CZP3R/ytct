@@ -7,27 +7,69 @@
             {% if channel_name == None %}
                 <input type="text" class="form-control" id="channelName" name="channelName" placeholder="PewDiePie">
             {% else %}
-                <input type="text" class="form-control" id="channelName" name="channelName" placeholder="{{ channel_name }}">
+                <input type="text" class="form-control" id="channelName" name="channelName"
+                       placeholder="{{ channel_name }}">
+            {% endif %}
+
+            <label for="playlistUrl">Playlist URL</label>
+            {% if playlist_url == None %}
+                <input type="text" class="form-control" id="playlistUrl" name="playlistUrl"
+                       placeholder="https://www.youtube.com/playlist?list=XXX">
+            {% else %}
+                <input type="text" class="form-control" id="playlistUrl" name="playlistUrl"
+                       placeholder="{{ playlist_url }}">
             {% endif %}
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
+
     <p>Channels added: {{ cl|length }}</p>
 
     {% if channels|length != 0 %}
+        <h1>Channel</h1>
         <div class="row">
             {% for channel in channels %}
                 <div class="col-sm-6">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ channel.picture }}" alt="Channel picture of {{ channel.name }}">
+                        <img class="card-img-top" src="{{ channel.picture }}"
+                             alt="Channel picture of {{ channel.name }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{ channel.name}}</h5>
+                            <h5 class="card-title">{{ channel.name }}</h5>
                             <p class="card-text">{{ channel.description }}</p>
-                            <a href="/yt_list/add/{{ channel.cid }}?redirectUrl=/search" class="btn btn-primary">Add to list</a>
+                            <a href="/yt_list/add/{{ channel.cid }}?redirectUrl=/search" class="btn btn-primary">Add to
+                                list</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
+        </div>
+    {% endif %}
+    {% if playlist_items|length != 0 %}
+        <h1>Playlist:</h1>
+        <a class="btn btn-outline-primary" href="/yt_list/add_playlist/{{ playlist_id }}?redirectUrl=/search">Add this playlist to list</a>
+        <div class="row">
+            <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Channel</th>
+                <th scope="col">Date</th>
+                <th scope="col">Link</th>
+                <th scope="col">Thumbnail</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for v in playlist_items %}
+                <tr>
+                    <th scope="row">{{ v.title }}</th>
+                    <th>{{ v.channel_name }}</th>
+                    <th>{{ v.date }}</th>
+                    <th><a href="{{ v.url }}">Click here</a></th>
+                    <th><img src="{{ v.thumbnail }}" style="width: 64px;"/></th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
         </div>
     {% endif %}
 {% endblock %}

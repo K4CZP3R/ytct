@@ -9,6 +9,7 @@ def google_logged_in(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if FlaskSession.get_credentials() is None:
+            session['redirect_url'] = request.url
             return FlaskMessage.get("Login required", "To continue you need to login with your Google account!", url_for("google_login"))
 
         return f(*args, **kwargs)

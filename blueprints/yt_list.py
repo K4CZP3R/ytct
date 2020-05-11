@@ -37,7 +37,9 @@ def index():
     loop.run_until_complete(future)
 
     channels = future.result()
-    return render_template("yt_list_index.html", channels=channels, ids=",".join(cl))
+
+    pl = get_playlist_list()
+    return render_template("yt_list_index.html", channels=channels,playlists=pl, ids=",".join(cl), pids=",".join(pl))
 
 
 @yt_list.route(r.add.route_path, methods=r.add.http_types)
@@ -49,6 +51,15 @@ def add(channel_id: str):
     return redirect(FlaskRedirect.get(url_for("search")))
 
 
+@yt_list.route(r.add_playlist.route_path, methods=r.add_playlist.http_types)
+def add_playlist(playlist_id: str):
+    pl = get_playlist_list()
+    if playlist_id not in pl:
+        pl.append(playlist_id)
+        set_playlists_list(pl)
+    return redirect(FlaskRedirect.get(url_for("search")))
+
+
 @yt_list.route(r.remove.route_path, methods=r.remove.http_types)
 def remove(channel_id: str):
     cl = get_channel_list()
@@ -57,6 +68,13 @@ def remove(channel_id: str):
         set_channel_list(cl)
     return redirect(FlaskRedirect.get(url_for("yt_list.index")))
 
+@yt_list.route(r.remove_playlist.route_path, methods=r.remove_playlist.http_types)
+def remove_playlist(playlist_id: str):
+    pl = get_playlist_list()
+    if playlist_id in pl:
+        pl.remove(playlist_id)
+        set_playlists_list(pl)
+    return redirect(FlaskRedirect.get(url_for("yt_list.index")))
 
 @yt_list.route(r.reset.route_path, methods=r.reset.http_types)
 def reset():
@@ -69,6 +87,13 @@ def get_channel_list() -> list:
         return list()
     return session["channels"]
 
+def get_playlist_list() -> list:
+    if "playlists" not in session:
+        return list()
+    return session["playlists"]
+
+def set_playlists_list(playlists: list):
+    session["playlists"] = playlists
 
 def set_channel_list(channels: list):
     session["channels"] = channels
