@@ -54,10 +54,12 @@ def new_index():
         ids = YouTubeApi.filter_valid_ids(ids.split(','))
     else:
         ids = []
-    if pids is not None:
+    if pids is not None and str(pids) != "":
         pids = pids.split(",")
     else:
         pids = []
+    print(pids)
+    print(ids)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     future = asyncio.ensure_future(get_videos_of_channels_async(session['credentials'], ids, pids))
