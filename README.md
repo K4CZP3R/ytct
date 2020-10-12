@@ -1,2 +1,0 @@
-# ytct
-YouTube Channel Tracker
