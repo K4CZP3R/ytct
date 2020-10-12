@@ -2,6 +2,8 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from models.yt_channel import YtChannel
 from models.yt_video import YtVideo
+from exceptions.ytct_missing_data import  YtctMissingData
+
 import json
 
 
@@ -10,6 +12,20 @@ class YoutubeApi:
     def __get_yt(credentials: str):
         creds = Credentials(**json.loads(credentials))
         return build('youtube', 'v3', credentials=creds)
+
+    @staticmethod
+    def channel_by_id(credentials: str, channel_id: str):
+        youtube = YoutubeApi.__get_yt(credentials)
+
+        query = youtube.channels().list(
+            part='snippet',
+            id=channel_id
+        )
+        resp = query.execute()
+        if len(resp['items']) == 0:
+            raise YtctMissingData("Could not find an channel with this id!")
+        return YoutubeApi.__convert_item_to_channel(resp['items'][0])
+
 
     @staticmethod
     def videos_by_channel_id(credentials: str, channel_id: str):
