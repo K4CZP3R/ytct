@@ -11,6 +11,7 @@ class GoogleOauth:
         flow = GoogleOauth.__get_flow()
         flow.redirect_uri = config.GOOGLE_REDIRECT_URI
 
+
         authorization_url, state = flow.authorization_url(
             access_type='offline',
             include_granted_scopes='true'
@@ -31,8 +32,8 @@ class GoogleOauth:
 
     @staticmethod
     def __get_flow():
-        return google_auth_oauthlib.flow.Flow.from_client_config(
-            client_config=config.GOOGLE_CLIENT_SECRET,
+        return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+            client_secrets_file="credentials.json",
             scopes=["https://www.googleapis.com/auth/youtube.force-ssl"]
         )
 

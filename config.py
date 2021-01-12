@@ -1,0 +1,1 @@
+GOOGLE_REDIRECT_URI = 'https://ytct.k4czp3r.xyz/callback'
