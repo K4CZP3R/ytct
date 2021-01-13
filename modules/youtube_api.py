@@ -1,8 +1,10 @@
 from google.oauth2.credentials import Credentials
+from google.auth.exceptions import RefreshError
 from googleapiclient.discovery import build
 from models.yt_channel import YtChannel
 from models.yt_video import YtVideo
 from exceptions.ytct_missing_data import  YtctMissingData
+from exceptions.google_oauth_exception import GoogleOauthException
 
 import json
 
@@ -43,7 +45,10 @@ class YoutubeApi:
             playlistId=playlist_id
         )
 
-        executed_query = query.execute()
+        try:
+            executed_query = query.execute()
+        except RefreshError:
+            raise GoogleOauthException('Can\'t execute query')
         return YoutubeApi.__convert_items_to_video_list(executed_query['items'])
 
     @staticmethod
@@ -54,7 +59,10 @@ class YoutubeApi:
             maxResults=5,
             q=channel_name
         )
-        executed_query = query.execute()
+        try:
+            executed_query = query.execute()
+        except RefreshError:
+            raise GoogleOauthException('Can\'t execute query')
         return YoutubeApi.__convert_items_to_channel_list(executed_query['items'])
 
     @staticmethod
