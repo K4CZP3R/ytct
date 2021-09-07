@@ -18,7 +18,7 @@ class GoogleOAuth:
     def __get_flow():
         return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
             'client_secret.json',
-            ['https://www.googleapis.com/auth/youtube.force-ssl']
+            ['https://www.googleapis.com/auth/youtube.force-ssl','https://www.googleapis.com/auth/youtube.readonly']
         )
     @staticmethod
     def fetch_token(flask_url, flask_request_url):
