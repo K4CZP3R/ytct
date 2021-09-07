@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  ytct:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 127.0.0.1:5001:8000
+    restart: always
